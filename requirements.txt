@@ -1,0 +1,15 @@
+click==7.1.2
+itsdangerous==1.1.0
+importlib-metadata==5.0.0
+Jinja2==2.11.3
+jsonpickle==1.4.1
+json5==0.8.4
+Flask==1.1.4
+Flask-Classful==0.14.2
+p2pnetwork==1.2
+requests==2.22.0
+pycryptodome==3.15.0
+MarkupSafe==2.0.1
+Werkzeug==1.0.1
+wheel==0.37.1
+zipp==3.9.0

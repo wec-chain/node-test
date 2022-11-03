@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% set title = "WebCoinPay-test" %}
+{% set active_page = "/" %}
+{% block content %}
+        <div class="row">
+            <div class="col-6 col-md-4">
+                <div class="card mb-2">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ blocksCount }}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Блоков</h6>
+                      <a href="/blocks" class="card-link">Просмотр</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card mb-2">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ transactionsCount }}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Транзакции</h6>
+                      <a href="/transactions" class="card-link">Просмотр</a>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-6 col-md-4">
+                <div class="card mb-2">
+                    <div class="card-body">
+                      <h5 class="card-title">1</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Нод(-а)</h6>
+                      
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-12 col-md-6">
+                <div class="card mb-2">
+                    <div class="card-body">
+                      <h5 class="card-title">Последние блоки</h5>
+                      <ol class="list-group list-group-numbered">
+                        {% for block in blocks %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                          <div class="ms-2 me-auto">
+                            <div class="fw-bold">{{ block.blockCount }}</div>
+                          </div>
+                          <span class="badge bg-primary rounded-pill">{{ block.transactions|length }}</span>
+                        </li>
+                        {% endfor %}
+                      </ol>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="card mb-2">
+                    <div class="card-body">
+                      <h5 class="card-title">Последние транзакции</h5>
+                      <ol class="list-group list-group-numbered">
+                        {% for b in blocks %}
+                            {% for transaction in b.transactions %}
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">{{ transaction.id }}</div>
+                                    {{ transaction.type }}
+                                </div>
+                                <span class="badge bg-primary rounded-pill">{{ transaction.amount }}</span>
+                                </li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ol>
+                    </div>
+                  </div>
+            </div>
+        </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ title }}</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='/favicon/apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='/favicon/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url_for('static', filename='/favicon/favicon-16x16.png') }}">
+    <link rel="manifest" href="{{url_for('static', filename='/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{url_for('static', filename='/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+          <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='logo.png') }}"  class="img-fluid" style="width:30px"> WebCoinPay-test</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link {% if active_page == '/'  %} active {% endif %}" aria-current="page" href="/">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if active_page == 'blocks'  %} active {% endif %}" href="/blocks">Блоки</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if active_page == 'transactions'  %} active {% endif %}" href="/transactions">Транзакции</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  API
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/blockchain">Blockchain</a></li>
+                  <li><a class="dropdown-item" href="/transactionPool">TransactionPool</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="container mt-2">
+        {% block content %} {% endblock %}
+      </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>

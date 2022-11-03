@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% set title = "Последние блоки" %}
+{% set active_page = "blocks" %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Последние блоки</h5>
+                <ol class="list-group list-group-numbered">
+                  {% for block in blocks %}
+                  <li class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                      <div class="fw-bold">{{ block.blockCount }}</div>
+                    </div>
+                    <span class="badge bg-primary rounded-pill">{{ block.transactions|length }}</span>
+                  </li>
+                  {% endfor %}
+                </ol>
+              </div>
+          </div>
+    </div>
+</div>
+{% endblock %}
