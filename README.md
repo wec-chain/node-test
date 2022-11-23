@@ -31,4 +31,4 @@
 
   Готово
 
-
+  Ссылка на подробную инструкцию по установке: [здесь](https://telegra.ph/Kak-ustanovit-testovuyu-nodu-WEC-11-03)
