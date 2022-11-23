@@ -8,6 +8,6 @@ COPY requirements.txt requirements.txt
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 5000
+EXPOSE 8080
 
-CMD ["python3", "Main.py", "localhost", "10001", "5000", "keys/genesisPrivateKey.pem"]
+CMD ["python3", "Main.py", "0.0.0.0", "10001", "5000", "keys/genesisPrivateKey.pem"]
