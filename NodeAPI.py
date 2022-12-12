@@ -17,9 +17,16 @@ class NodeAPI(FlaskView):
 
     def start(self, port):
         ip = get('https://api.ipify.org').content.decode('utf8')
-        info = {'ip':format(ip), 'port':port, 'platform':platform.platform()}
-        url = 'http://bootnode.pr100kot.com/api/nodes/store'
-        response = post(url, json=info)
+        info = {'ip': format(ip), 'port': port, 'platform': platform.platform()}
+        urls = [
+            'http://bootnode.pr100kot.com/api/nodes/store',
+            # 'http://95.181.230.118/api/nodes/store'
+        ]
+        for url in urls:
+            response = post(url, json=info)
+            print(response)
+            if response == 'ok' or response == 'exists':
+                break
         NodeAPI.register(self.app, route_base='/')
         self.app.run(host='0.0.0.0', port=port)
         
