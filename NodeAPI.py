@@ -1,11 +1,10 @@
 from flask_classful import FlaskView, route
 from flask import Flask, jsonify, request, render_template
 from BlockchainUtils import BlockchainUtils
-import platform
-from requests import get, post
-import json
+import os
+from dotenv import load_dotenv
 
-
+load_dotenv()
 
 node = None
 
@@ -16,49 +15,32 @@ class NodeAPI(FlaskView):
         self.app = Flask(__name__)
 
     def start(self, port):
-        ip = get('https://api.ipify.org').content.decode('utf8')
-        info = {'ip': format(ip), 'port': port, 'platform': platform.platform()}
-        urls = [
-            'http://bootnode.pr100kot.com/api/nodes/store',
-            # 'http://95.181.230.118/api/nodes/store'
-        ]
-        for url in urls:
-            response = post(url, json=info)
-            print(response)
-            if response == 'ok' or response == 'exists':
-                break
         NodeAPI.register(self.app, route_base='/')
-        self.app.run(host='0.0.0.0', port=port)
-        
-        
+        self.app.run(host=os.getenv('CURRENT_NODE_IP'), port=port)
 
     def injectNode(self, injectedNode):
         global node
         node = injectedNode
-        
+
     @route('/', methods=['GET'])
     def home(self):
         blocksCount = len(node.blockchain.toJson()['blocks'])
+        nodes_count = 0
 
-        nodes = get('http://bootnode.pr100kot.com/api/nodes').content.decode('utf-8')
-        data = json.loads(nodes)
-        nodes_count = len(data['data'])
-        
         i = 0
         for block in node.blockchain.toJson()['blocks']:
             i = i + len(block['transactions'])
-        
-        return render_template('index.html', blocksCount=blocksCount, transactionsCount=i, blocks=list(reversed(node.blockchain.toJson()['blocks'])), nodes_count=nodes_count)
-    
-    
+
+        return render_template('index.html', blocksCount=blocksCount, transactionsCount=i,
+                               blocks=list(reversed(node.blockchain.toJson()['blocks'])), nodes_count=nodes_count)
+
     @route('/transactions', methods=['GET'])
-    def transactions(self):    
+    def transactions(self):
         return render_template('transactions.html', blocks=list(reversed(node.blockchain.toJson()['blocks'])))
-    
+
     @route('/blocks', methods=['GET'])
-    def blocks(self):    
+    def blocks(self):
         return render_template('blocks.html', blocks=list(reversed(node.blockchain.toJson()['blocks'])))
-    
 
     @route('/info', methods=['GET'])
     def info(self):

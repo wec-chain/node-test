@@ -1,17 +1,22 @@
 from Wallet import Wallet
 from BlockchainUtils import BlockchainUtils
 import requests
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 def postTransaction(sender, receiver, amount, type):
     transaction = sender.createTransaction(
         receiver.publicKeyString(), amount, type)
-    url = "http://localhost:5000/transaction"
+    url = 'http://'+os.getenv('CURRENT_NODE_IP')+':'+os.getenv('CURRENT_NODE_FLASK_PORT')+"/transaction"
     package = {'transaction': BlockchainUtils.encode(transaction)}
     request = requests.post(url, json=package)
 
 
 if __name__ == '__main__':
+    print(os.getenv('CURRENT_NODE_IP') + ':' + os.getenv('CURRENT_NODE_FLASK_PORT') + "/transaction")
 
     maksim = Wallet()
     artem = Wallet()

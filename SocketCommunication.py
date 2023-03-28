@@ -3,7 +3,10 @@ from PeerDiscoveryHandler import PeerDiscoveryHandler
 from SocketConnector import SocketConnector
 from BlockchainUtils import BlockchainUtils
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 class SocketCommunication(Node):
 
@@ -12,10 +15,12 @@ class SocketCommunication(Node):
         self.peers = []
         self.peerDiscoveryHandler = PeerDiscoveryHandler(self)
         self.socketConnector = SocketConnector(ip, port)
+        self.firstNodeIP = os.getenv('FIRST_NODE_IP')
+        self.firstNodePort = int(os.getenv('FIRST_NODE_NETWORK_PORT'))
 
     def connectToFirstNode(self):
-        if self.socketConnector.port != 10001:
-            self.connect_with_node('0.0.0.0', 10001)
+        if self.socketConnector.port != self.firstNodePort:
+            self.connect_with_node(self.firstNodeIP, self.firstNodePort)
 
     def startSocketCommunication(self, node):
         self.node = node
